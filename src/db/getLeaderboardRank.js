@@ -1,6 +1,8 @@
 const getLeaderboardRank = (difficulty, time, data) => {
   if (!data) return null; // Data empty
 
+  console.log(JSON.parse(data));
+
   // Ensure it's sorted (in case)
   const sorted = JSON.parse(data).sort((a, b) => a.time - b.time);
 

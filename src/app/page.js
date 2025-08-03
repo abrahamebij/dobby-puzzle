@@ -7,7 +7,6 @@ import { usePuzzle } from "../hooks/usePuzzle";
 import { useTimer } from "../hooks/useTimer";
 import { useLeaderboard } from "../hooks/useLeaderboard";
 import Img from "@/components/Img";
-import getLeaderboardRank from "@/db/getLeaderboardRank";
 import getLeaderboard from "@/db/getLeaderboard";
 
 function Home() {
@@ -158,6 +157,7 @@ function Home() {
           loading={loading}
           error={error}
           newScoreData={newScoreData}
+          setNewScoreData={setNewScoreData}
         />
       </div>
     </div>

@@ -90,9 +90,9 @@ export const usePuzzle = (difficulty) => {
     setMoveCount(0);
   }, [difficulty]);
 
-  setTimeout(() => {
-    setIsGameWon(true);
-  }, 4000);
+  // setTimeout(() => {
+  //   setIsGameWon(true);
+  // }, 4000);
 
   const moveTile = useCallback(
     (row, col) => {

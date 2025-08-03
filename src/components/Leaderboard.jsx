@@ -9,6 +9,7 @@ const Leaderboard = ({
   leaderboard,
   onFetchLeaderboard,
   onSubmitScore,
+  setNewScoreData,
   loading,
   error,
   newScoreData = null,
@@ -38,6 +39,8 @@ const Leaderboard = ({
         newScoreData.time
       );
       setPlayerName("");
+      setNewScoreData(null);
+
       // The leaderboard will be automatically refreshed by the hook
     } catch (error) {
       console.error("Failed to submit score:", error);
@@ -97,7 +100,7 @@ const Leaderboard = ({
               <p className="text-green-700">
                 You finished {newScoreData.difficulty} mode in{" "}
                 {formatTime(newScoreData.time)}!
-                {` You're ranked #${newScoreData.rank}!`}
+                {newScoreData.rank && ` You're ranked #${newScoreData.rank}!`}
               </p>
             </div>
             <div className="flex space-x-2">
