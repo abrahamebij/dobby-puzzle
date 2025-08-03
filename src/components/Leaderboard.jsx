@@ -11,7 +11,7 @@ const Leaderboard = ({
   onSubmitScore,
   loading,
   error,
-  newScoreData = null, // { difficulty, time, qualifies, rank }
+  newScoreData = null,
 }) => {
   const [playerName, setPlayerName] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -97,7 +97,7 @@ const Leaderboard = ({
               <p className="text-green-700">
                 You finished {newScoreData.difficulty} mode in{" "}
                 {formatTime(newScoreData.time)}!
-                {newScoreData.rank && ` You're ranked #${newScoreData.rank}!`}
+                {` You're ranked #${newScoreData.rank}!`}
               </p>
             </div>
             <div className="flex space-x-2">

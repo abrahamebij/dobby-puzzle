@@ -4,7 +4,7 @@ import databases from "./databases";
 
 async function updateLeaderboard(name, difficulty, time) {
   try {
-    const promise = databases.createDocument(
+    const promise = await databases.createDocument(
       process.env.DATABASE_ID,
       difficulty === "easy"
         ? process.env.LEADERBOARD_EASY_ID
@@ -16,15 +16,10 @@ async function updateLeaderboard(name, difficulty, time) {
         time,
       }
     );
-    promise.then(
-      (response) => {
-        console.log(response);
-        return response;
-      },
-      (error) => console.log(error)
-    );
+    return promise;
   } catch (error) {
     throw new Error(error.message);
+    // return error
   }
 }
 

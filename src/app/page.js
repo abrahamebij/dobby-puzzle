@@ -7,6 +7,8 @@ import { usePuzzle } from "../hooks/usePuzzle";
 import { useTimer } from "../hooks/useTimer";
 import { useLeaderboard } from "../hooks/useLeaderboard";
 import Img from "@/components/Img";
+import getLeaderboardRank from "@/db/getLeaderboardRank";
+import getLeaderboard from "@/db/getLeaderboard";
 
 function Home() {
   const [difficulty, setDifficulty] = useState("easy");
@@ -38,19 +40,18 @@ function Home() {
   useEffect(() => {
     if (isGameWon && gameStarted) {
       const checkScore = async () => {
-        // const qualification = await checkQualification(difficulty, time);
-        // if (qualification.qualifies) {
-        //   setNewScoreData({
-        //     difficulty,
-        //     time,
-        //     qualifies: true,
-        //     rank: qualification.rank,
-        //   });
-        // }
+        const rank = await checkQualification(difficulty, time);
+
         setNewScoreData({
           difficulty,
           time,
+          rank,
         });
+
+        // setNewScoreData({
+        //   difficulty,
+        //   time,
+        // });
         setShowLeaderboard(true);
       };
       checkScore();
