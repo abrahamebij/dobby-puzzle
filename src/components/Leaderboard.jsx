@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { X, Trophy, Medal, Award } from "lucide-react";
+import formatUsername, { removeUsernameSymbol } from "@/lib/formatUsername";
+import Link from "next/link";
 
 const Leaderboard = ({
   isOpen,
@@ -17,6 +19,7 @@ const Leaderboard = ({
   const [playerName, setPlayerName] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [activeTab, setActiveTab] = useState("easy");
+  const [isInputCorrect, setIsInputCorrect] = useState(true);
 
   useEffect(() => {
     if (isOpen) {
@@ -27,14 +30,25 @@ const Leaderboard = ({
   function handleTabChange(tab) {
     onFetchLeaderboard(tab);
   }
+  function handleInputChange(e) {
+    const name = e.target.value;
+    // console.log(name.includes(" "));
 
-  const handleSubmitScore = async () => {
+    if (name.includes(" ")) {
+      setIsInputCorrect(false);
+    } else {
+      setIsInputCorrect(true);
+    }
+    setPlayerName(name);
+  }
+  const handleSubmitScore = async (e) => {
+    e.preventDefault();
     if (!playerName.trim() || !newScoreData) return;
 
     setSubmitting(true);
     try {
       await onSubmitScore(
-        playerName.trim(),
+        formatUsername(playerName.trim()),
         newScoreData.difficulty,
         newScoreData.time
       );
@@ -90,7 +104,6 @@ const Leaderboard = ({
 
         {/* New Score Submission */}
         {newScoreData && (
-          // {newScoreData && newScoreData.qualifies && (
           <div className="p-6 bg-green-50 border-b">
             <div className="text-center mb-4">
               <h3 className="text-lg font-semibold text-green-800">
@@ -103,21 +116,31 @@ const Leaderboard = ({
                 {newScoreData.rank && ` You're ranked #${newScoreData.rank}!`}
               </p>
             </div>
-            <div className="flex space-x-2">
+            <p className="font-semibold pb-2">Enter your X username</p>
+            <form
+              className="flex space-x-2 items-stretch"
+              onSubmit={handleSubmitScore}
+            >
               <Input
-                placeholder="Enter your name"
+                placeholder="E.g @ebij_dev"
                 value={playerName}
-                onChange={(e) => setPlayerName(e.target.value)}
+                onChange={handleInputChange}
                 maxLength={50}
-                className="flex-1"
+                className={`flex-1 ${!isInputCorrect && "border-red-500"}`}
               />
               <Button
-                onClick={handleSubmitScore}
-                disabled={!playerName.trim() || submitting}
+                // onClick={handleSubmitScore}
+                type="submit"
+                disabled={!playerName.trim() || !isInputCorrect || submitting}
               >
                 {submitting ? "Submitting..." : "Submit"}
               </Button>
-            </div>
+            </form>
+            {!isInputCorrect && (
+              <p className="text-sm pt-2 text-red-600">
+                Kindly remove all spaces before submitting
+              </p>
+            )}
           </div>
         )}
 
@@ -184,9 +207,15 @@ const Leaderboard = ({
                     <div className="flex items-center space-x-3">
                       {getRankIcon(index + 1)}
                       <div>
-                        <div className="font-semibold text-gray-800">
+                        <Link
+                          target="_blank"
+                          className="font-semibold text-gray-800 underline hover:no-underline"
+                          href={`https://x.com/${removeUsernameSymbol(
+                            score.name
+                          )}`}
+                        >
                           {score.name}
-                        </div>
+                        </Link>
                         <div className="text-sm text-gray-600">
                           {new Date(score.date).toLocaleDateString()}
                         </div>

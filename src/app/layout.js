@@ -13,7 +13,8 @@ export const metadata = {
     "Challenge your speed and strategy in Dobby Tile Puzzle — a fast-paced tile matching game where every move counts. Climb the leaderboard and prove your skills!",
   keywords:
     "tile puzzle, brain game, leaderboard, speed challenge, Dobby Tile Puzzle",
-
+};
+export const viewport = {
   themeColor: "#EDF5FE",
 };
 
