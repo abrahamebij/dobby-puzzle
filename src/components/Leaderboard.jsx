@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { X, Trophy, Medal, Award } from "lucide-react";
 import formatUsername, { removeUsernameSymbol } from "@/lib/formatUsername";
 import Link from "next/link";
+import Img from "./Img";
 
 const Leaderboard = ({
   isOpen,
@@ -122,7 +123,7 @@ const Leaderboard = ({
               onSubmit={handleSubmitScore}
             >
               <Input
-                placeholder="E.g @ebij_dev"
+                placeholder="E.g @abrahamebij"
                 value={playerName}
                 onChange={handleInputChange}
                 maxLength={50}
@@ -204,23 +205,29 @@ const Leaderboard = ({
                     key={score.$id}
                     className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100"
                   >
-                    <div className="flex items-center space-x-3">
+                    <Link
+                      href={`https://x.com/${removeUsernameSymbol(score.name)}`}
+                      target="_blank"
+                      className="flex items-center space-x-3 group"
+                    >
                       {getRankIcon(index + 1)}
-                      <div>
-                        <Link
-                          target="_blank"
-                          className="font-semibold text-gray-800 underline hover:no-underline"
-                          href={`https://x.com/${removeUsernameSymbol(
+                      <div className="w-10 h-10 overflow-hidden rounded-full bg-gray-400">
+                        <Img
+                          src={`https://unavatar.io/twitter/${removeUsernameSymbol(
                             score.name
                           )}`}
-                        >
+                          alt={`${score.name}'s Twitter Avatar`}
+                        />
+                      </div>
+                      <div>
+                        <div className="font-semibold text-gray-800 underline group-hover:no-underline">
                           {score.name}
-                        </Link>
+                        </div>
                         <div className="text-sm text-gray-600">
                           {new Date(score.date).toLocaleDateString()}
                         </div>
                       </div>
-                    </div>
+                    </Link>
                     <div className="text-right">
                       <div className="font-bold text-blue-600">
                         {formatTime(score.time)}

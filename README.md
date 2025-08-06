@@ -56,12 +56,14 @@ Compete against other players by solving puzzles as quickly as possible and clim
    npm install
    ```
 
-3. Create a `.env.local` file in the root directory:
+3. Create a `.env` file in the root directory:
 
    ```env
+   APPWRITE_PROJECT_ID=your-project-id
    DATABASE_ID=your_database_id
    LEADERBOARD_EASY_ID=your_easy_collection_id
    LEADERBOARD_HARD_ID=your_hard_collection_id
+   APPWRITE_ENDPOINT="https://<region>.cloud.appwrite.io/v1"
    ```
 
 4. Run the development server:
@@ -97,7 +99,7 @@ Compete against other players by solving puzzles as quickly as possible and clim
 
 ---
 
-## Roadmap
+## Things Still Left To Do
 
 - [ ] Convert to PWA.
 - [ ] Ability to update leaderboard if the same user scores higher.
@@ -143,3 +145,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 - [Next.js](https://nextjs.org)
 - [Appwrite](https://appwrite.io)
 - [TailwindCSS](https://tailwindcss.com)
+- [Radix UI](https://www.radix-ui.com/)
